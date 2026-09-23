@@ -1,0 +1,24 @@
+{
+  "name": "convai",
+  "owner": {
+    "name": "Convai",
+    "email": "support@convai.com",
+    "url": "https://convai.com"
+  },
+  "description": "Official Convai plugins for Claude Code.",
+  "version": "0.1.0",
+  "plugins": [
+    {
+      "name": "convai-character-authoring",
+      "source": "./packages/claude",
+      "description": "Create, edit, review and release Convai AI characters from Claude Code.",
+      "version": "0.1.0",
+      "author": { "name": "Convai" },
+      "displayName": "Convai Character Authoring",
+      "homepage": "https://convai.com",
+      "repository": "https://github.com/Conv-AI/convai-agent-plugins",
+      "license": "LicenseRef-Convai-Proprietary",
+      "keywords": ["convai", "characters", "npc"]
+    }
+  ]
+}
