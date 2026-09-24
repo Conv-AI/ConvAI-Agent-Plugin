@@ -89,6 +89,12 @@ def main() -> int:
 
     # Production endpoint only; scopes limited to what is published.
     for rel in ("packages/openai/mcp.json", "packages/claude/.mcp.json"):
+        if not (ROOT / rel).is_file():
+            errors.append(
+                f"{rel} is missing: the plugin would ship without "
+                "the MCP server"
+            )
+            continue
         for name, server in load(rel)["mcpServers"].items():
             check(
                 server.get("url") == PRODUCTION_MCP_URL,

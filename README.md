@@ -32,7 +32,7 @@ CI fails if they drift.
 **Claude Code**
 
 ```text
-/plugin marketplace add Conv-AI/convai-agent-plugins
+/plugin marketplace add Conv-AI/ConvAI-Agent-Plugin
 /plugin install convai-character-authoring@convai
 /mcp        # convai -> Authenticate
 ```

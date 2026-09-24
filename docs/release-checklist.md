@@ -98,18 +98,18 @@ operation catalog version, Auth release, client versions tested, results of each
    update `CHANGELOG.md`, merge, then `git tag v<version> && git push --tags`. CI attaches zips.
 2. Install from the public Convai marketplace in a fresh environment:
    ```text
-   /plugin marketplace add Conv-AI/convai-agent-plugins
+   /plugin marketplace add Conv-AI/ConvAI-Agent-Plugin
    /plugin install convai-character-authoring@convai
    /mcp            # convai -> Authenticate, finish Convai sign-in and consent
    ```
    Check skill discovery, a read and a write review case, `/plugin update`, and uninstall.
-3. Submit `Conv-AI/convai-agent-plugins` (plugin path `packages/claude`, pinned tag) to the
+3. Submit `Conv-AI/ConvAI-Agent-Plugin` (plugin path `packages/claude`, pinned tag) to the
    official Anthropic plugin marketplace through the current submission form. Keep the Convai
    marketplace as the fallback until the official listing and upgrades are proven.
 
 ## Rollback
 
-- Claude Code: users on the Convai marketplace pin `Conv-AI/convai-agent-plugins@v<previous>`;
+- Claude Code: users on the Convai marketplace pin `Conv-AI/ConvAI-Agent-Plugin@v<previous>`;
   re-point the `main` marketplace by reverting the release commit.
 - OpenAI / Claude connector: unpublish or revert the listing in the portal; the MCP server and
   Auth changes roll back through their own infrastructure releases.
