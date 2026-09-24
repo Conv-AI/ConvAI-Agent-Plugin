@@ -1,0 +1,50 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/checkout@v5
+        with:
+          repository: Conv-AI/convai-api-mcp
+          ref: main
+          path: convai-api-mcp
+          sparse-checkout: src/convai_api_mcp/data
+          token: ${{ secrets.ORG_APP_DEPLOY_TOKEN }}
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - run: npm install -g @anthropic-ai/claude-code
+      - name: Shared skills are in sync with packages
+        run: python3 scripts/build.py --check
+      - name: Release checks
+        run: python3 scripts/validate.py --catalog convai-api-mcp/src/convai_api_mcp/data/operation-catalog.v1.json
+      - name: Claude plugin and marketplace
+        run: |
+          claude plugin validate packages/claude --strict
+          claude plugin validate .
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - name: Tag matches manifest version
+        run: test "v$(python3 -c 'import json;print(json.load(open("packages/openai/plugin.json"))["version"])')" = "${GITHUB_REF_NAME}"
+      - run: python3 scripts/build.py --zip
+      - run: gh release create "${GITHUB_REF_NAME}" dist/*.zip --notes-file CHANGELOG.md
+        env:
+          GH_TOKEN: ${{ github.token }}
