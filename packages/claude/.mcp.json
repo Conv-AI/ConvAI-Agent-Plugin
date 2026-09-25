@@ -5,7 +5,7 @@
       "url": "https://mcp-api.convai.com/mcp",
       "clientId": "claude-code",
       "callbackPort": 8080,
-      "scopes": ["character:read", "character:write", "backstory:generate", "chat-history:read", "knowledge-bank:read"]
+      "scopes": ["character:read", "character:write", "backstory:generate", "chat-history:read", "knowledge-bank:read", "knowledge-bank:write"]
     }
   }
 }
