@@ -16,7 +16,8 @@ Do not submit until every item is true in **production**; verify on Preview firs
 - [ ] `https://mcp-api.convai.com/mcp` is public over trusted TLS and returns `401` with
       `WWW-Authenticate: Bearer ... resource_metadata="https://mcp-api.convai.com/.well-known/oauth-protected-resource"`.
 - [ ] `/.well-known/oauth-protected-resource` lists `resource`, `authorization_servers: ["https://login.convai.com"]`
-      and `scopes_supported` **without** `knowledge-bank:write` (reserved until upload/delete tools ship).
+      and `scopes_supported` equal to the catalog's required + conditional scopes (includes
+      `knowledge-bank:write`, which the Character API enforces for writes touching knowledge associations).
 - [ ] `https://login.convai.com/.well-known/oauth-authorization-server` returns metadata with
       `authorization_response_iss_parameter_supported: true`.
 - [ ] Production `OAUTH_CLIENTS` registers:

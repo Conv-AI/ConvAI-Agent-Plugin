@@ -16,14 +16,16 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 PRODUCTION_MCP_URL = "https://mcp-api.convai.com/mcp"
-# Scopes that may be requested. knowledge-bank:write stays out until
-# upload/delete tools ship.
+# Scopes that may be requested: the union of the MCP catalog's required and
+# conditional scopes. knowledge-bank:write is conditional on character writes
+# that touch knowledge associations (Character API enforces it).
 PUBLISHED_SCOPES = {
     "character:read",
     "character:write",
     "backstory:generate",
     "chat-history:read",
     "knowledge-bank:read",
+    "knowledge-bank:write",
 }
 SECRET = re.compile(
     r"cv(?:pat|oat|ort|oac)_[0-9a-f]{8,}"
