@@ -133,6 +133,18 @@ def main() -> int:
             f"OpenAI interface.{key} must be an https URL",
         )
 
+    # Brand assets referenced by the OpenAI listing must ship in the package.
+    for key in ("logo", "composerIcon"):
+        check(key in ui, f"OpenAI interface.{key} is missing")
+    for key in ("logo", "composerIcon", "screenshots"):
+        values = ui.get(key, [])
+        for asset in values if isinstance(values, list) else [values]:
+            check(
+                str(asset).startswith("./")
+                and (ROOT / "packages/openai" / asset).is_file(),
+                f"OpenAI interface.{key} {asset!r} is not a file in packages/openai",
+            )
+
     # Skills.
     tool_names = None
     if args.catalog:

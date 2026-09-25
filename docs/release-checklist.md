@@ -1,5 +1,8 @@
 # Release checklist
 
+Portal copy (listing text, use cases, test steps, Anthropic email) is in
+[submission-answers.md](submission-answers.md).
+
 Three separate release artifacts share these skills and one MCP server. Each has
 its own review, version record and rollback:
 
@@ -63,9 +66,9 @@ operation catalog version, Auth release, client versions tested, results of each
 
 ## 3. OpenAI (ChatGPT and Codex) - one submission
 
-1. Add brand assets to `packages/openai/assets/` (logo, composer icon, 2-3 screenshots) and
-   reference them in `plugin.json` under `extensions.com.openai.interface`
-   (`logo`, `composerIcon`, `screenshots`, `brandColor`). Confirm `category` in the portal.
+1. Brand assets are in `packages/openai/assets/` and referenced from `plugin.json`
+   (`logo`, `composerIcon`, `brandColor`). Optionally add screenshots there and list them
+   under `screenshots`. Confirm `category` in the portal.
 2. `python3 scripts/build.py --zip` produces `dist/convai-character-authoring-openai-<version>.zip`.
 3. Portal -> **Create plugin** -> **With MCP**, using the verified Convai business identity.
    - **Info**: copy name, short and long description from `packages/openai/plugin.json`; website,
