@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "convai-character-authoring",
+  "version": "0.1.0",
+  "description": "Create, edit, review and release Convai AI characters from your agent.",
+  "author": {
+    "name": "Convai",
+    "email": "support@convai.com",
+    "url": "https://convai.com"
+  },
+  "homepage": "https://convai.com",
+  "repository": "https://github.com/Conv-AI/ConvAI-Agent-Plugin",
+  "license": "LicenseRef-Convai-Proprietary",
+  "keywords": [
+    "convai",
+    "characters",
+    "npc",
+    "conversational-ai",
+    "game-dev"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Convai Character Authoring",
+        "shortDescription": "Build and manage AI characters",
+        "longDescription": "Sign in with your Convai account to list and inspect your characters, create new ones, edit backstory, model, voice, language and narrative design, compare draft and released versions, release or roll back versions, and connect existing knowledge bank documents. Every change is confirmed before it is written to your account.",
+        "developerName": "Convai",
+        "category": "Productivity",
+        "capabilities": [
+          "Read",
+          "Write"
+        ],
+        "websiteURL": "https://convai.com",
+        "supportURL": "https://forum.convai.com",
+        "privacyPolicyURL": "https://convai.com/privacy-policy",
+        "termsOfServiceURL": "https://convai.com/tos",
+        "defaultPrompt": [
+          "List my Convai characters and summarize each one in a sentence.",
+          "Create a Convai character named Captain Mira, a retired starship pilot who runs a spaceport cafe.",
+          "What changed in my character's draft since the last released version?"
+        ],
+        "brandColor": "#29B355",
+        "logo": "./assets/logo.png",
+        "composerIcon": "./assets/composer-icon.png"
+      }
+    }
+  }
+}
