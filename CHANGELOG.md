@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2
+
+- OpenAI listing text no longer names models or agents: new About text, plain description, and skill descriptions say "response settings" instead of "model".
+
 ## 0.1.1
 
 OpenAI review fixes.

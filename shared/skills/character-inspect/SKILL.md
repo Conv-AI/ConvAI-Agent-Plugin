@@ -1,6 +1,6 @@
 ---
 name: character-inspect
-description: Look up the user's Convai characters and explain how one is configured - backstory, model, voice, language, narrative, functions, attached MCP servers and knowledge documents. Use when the user asks to list, find, show, summarize or audit a Convai character without changing it.
+description: Look up the user's Convai characters and explain how one is configured - backstory, voice, language, response settings, narrative, functions, attached MCP servers and knowledge documents. Use when the user asks to list, find, show, summarize or audit a Convai character without changing it.
 ---
 
 # Inspect a Convai character

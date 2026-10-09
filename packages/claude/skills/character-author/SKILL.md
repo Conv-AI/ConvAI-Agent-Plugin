@@ -1,6 +1,6 @@
 ---
 name: character-author
-description: Create or edit a Convai character - write or generate a backstory, pick model, voice and language, and design narrative sections, triggers and decisions. Use when the user asks to create, build, clone, update, rename, redesign or delete a Convai character or its narrative.
+description: Create or edit a Convai character - write or generate a backstory, pick voice, language and response settings, and design narrative sections, triggers and decisions. Use when the user asks to create, build, clone, update, rename, redesign or delete a Convai character or its narrative.
 ---
 
 # Author a Convai character
