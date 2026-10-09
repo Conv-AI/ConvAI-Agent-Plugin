@@ -10,7 +10,7 @@ A character has one editable **draft** and immutable **versions**; one version i
 ## Review (read-only)
 
 1. Resolve the character, then call `list_character_versions` to show versions, which is latest, and whether the draft has unreleased changes.
-2. Compare with `diff_character_versions` (versions, latest or draft). Prefer the semantic view for people; use raw only when asked. Summarize changes by area: identity/backstory, model/voice/language, narrative, functions, knowledge, MCP servers.
+2. Compare with `diff_character_versions` (versions, latest or draft). Prefer the semantic view for people; use raw only when asked. Summarize changes by area: identity/backstory, response settings/voice/language, narrative, functions, knowledge, external tool servers.
 
 ## Change version state (writes - confirm first)
 

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4
+
+- Skill descriptions and prose no longer say "MCP" or "model" ("external tool servers", "response settings"); tool names are unchanged.
+
 ## 0.1.3
 
 - OpenAI subtitle is "Build Convai game characters" ("AI characters" read as a reference to another AI platform); dropped the `conversational-ai` keyword.
