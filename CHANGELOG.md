@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3
+
+- OpenAI subtitle is "Build Convai game characters" ("AI characters" read as a reference to another AI platform); dropped the `conversational-ai` keyword.
+
 ## 0.1.2
 
 - OpenAI listing text no longer names models or agents: new About text, plain description, and skill descriptions say "response settings" instead of "model".
