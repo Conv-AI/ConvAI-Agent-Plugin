@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.1
+
+OpenAI review fixes.
+
+- OpenAI listing category is now Developer Tools; the About text leads with the plugin's purpose and states its limits.
+- `character-author` no longer mentions `test_function`; production MCP does not expose function execution.
+
 ## 0.1.0
 
 First submission candidate.

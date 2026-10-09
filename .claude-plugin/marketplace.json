@@ -6,13 +6,13 @@
     "url": "https://convai.com"
   },
   "description": "Official Convai plugins for Claude Code.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "plugins": [
     {
       "name": "convai-character-authoring",
       "source": "./packages/claude",
       "description": "Create, edit, review and release Convai AI characters from Claude Code.",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": { "name": "Convai" },
       "displayName": "Convai Character Authoring",
       "homepage": "https://convai.com",

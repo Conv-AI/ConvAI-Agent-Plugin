@@ -25,7 +25,7 @@ Every change here is written to the user's Convai account. Confirm before writin
 - `update_character` changes only the fields you send; omitted fields keep their saved value. Send only what the user asked to change.
 - Edits land on the editable **draft**. Tell the user the live version is unchanged until they release it (see `character-version-review`).
 - Narrative design: `create_narrative_section`, `update_narrative_section`, `create_narrative_trigger`, `update_narrative_trigger`, `add_narrative_decision`, `edit_narrative_decision`, `set_narrative_start_section`. Explain the resulting flow (start section, choices, triggers) after changes.
-- Functions and external MCP servers: `create_function`, `update_function`, `attach_function`, `detach_function`, `attach_external_mcp_server`, `detach_external_mcp_server`. `test_function` and `test_external_mcp_server` execute code or contact external systems - describe what will run before calling them.
+- Functions and external MCP servers: `create_function`, `update_function`, `attach_function`, `detach_function`, `attach_external_mcp_server`, `detach_external_mcp_server`. `test_external_mcp_server` contacts an external system - say which server it will call before calling it.
 
 ## Destructive operations
 

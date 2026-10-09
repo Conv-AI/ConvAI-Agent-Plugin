@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "convai-character-authoring",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Create, edit, review and release Convai AI characters from your agent.",
   "author": {
     "name": "Convai",
@@ -23,9 +23,9 @@
       "interface": {
         "displayName": "Convai Character Authoring",
         "shortDescription": "Build and manage AI characters",
-        "longDescription": "Sign in with your Convai account to list and inspect your characters, create new ones, edit backstory, model, voice, language and narrative design, compare draft and released versions, release or roll back versions, and connect existing knowledge bank documents. Every change is confirmed before it is written to your account.",
+        "longDescription": "Author and manage conversational AI characters for games and virtual worlds on Convai. Sign in with your Convai account to list and inspect your characters, create new ones, edit backstory, model, voice, language and narrative design, compare draft and released versions, release or roll back versions, and connect existing knowledge bank documents. The plugin only accesses characters and documents available to your Convai account, and every change is confirmed before it is written. It does not upload knowledge documents or run function code; use the Convai dashboard for those.",
         "developerName": "Convai",
-        "category": "Productivity",
+        "category": "Developer Tools",
         "capabilities": [
           "Read",
           "Write"
