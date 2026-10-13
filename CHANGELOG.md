@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.5
+
+- Add general-audience authoring, safeguard preservation, untrusted-content handling and data-minimization instructions to the shared skills.
+- Apply safety checks to cloning and version activation, and explain downstream effects of function and external-server associations.
+- Make automatic asset/Experience creation opt-in in the authoring workflow and make release promotion explicit.
+- Clarify listing scope, add safety-focused review cases and preserve additional regression scenarios. Cases are unexecuted until tested against a review account.
+- Document backend and submission verification still needed. Skill changes do not implement server-side policy enforcement or guarantee approval.
+
 ## 0.1.4
 
 - Skill descriptions and prose no longer say "MCP" or "model" ("external tool servers", "response settings"); tool names are unchanged.

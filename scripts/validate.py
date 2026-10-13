@@ -120,12 +120,12 @@ def main() -> int:
         "shared/review-cases.json starterPrompts",
     )
     check(
-        len(cases["positive"]) >= 5,
-        "OpenAI review needs at least 5 positive test cases",
+        len(cases["positive"]) == 5,
+        "OpenAI submission needs exactly 5 positive test cases",
     )
     check(
-        len(cases["negative"]) >= 3,
-        "OpenAI review needs at least 3 negative test cases",
+        len(cases["negative"]) == 3,
+        "OpenAI submission needs exactly 3 negative test cases; keep extra cases in supplementalNegative",
     )
     # OpenAI portal limits.
     for key in ("displayName", "shortDescription"):
