@@ -12,15 +12,20 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    env:
+      # The MCP catalog lives in a private repository. Pull requests from forks
+      # and repositories without access to this secret skip the tool-name check.
+      CATALOG_TOKEN: ${{ secrets.ORG_APP_DEPLOY_TOKEN }}
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/checkout@v5
+      - if: env.CATALOG_TOKEN != ''
+        uses: actions/checkout@v5
         with:
           repository: Conv-AI/convai-api-mcp
           ref: main
           path: convai-api-mcp
           sparse-checkout: src/convai_api_mcp/data
-          token: ${{ secrets.ORG_APP_DEPLOY_TOKEN }}
+          token: ${{ env.CATALOG_TOKEN }}
       - uses: actions/setup-node@v5
         with:
           node-version: 22
@@ -28,7 +33,13 @@ jobs:
       - name: Shared skills are in sync with packages
         run: python3 scripts/build.py --check
       - name: Release checks
-        run: python3 scripts/validate.py --catalog convai-api-mcp/src/convai_api_mcp/data/operation-catalog.v1.json
+        run: |
+          if [ -n "$CATALOG_TOKEN" ]; then
+            python3 scripts/validate.py --catalog convai-api-mcp/src/convai_api_mcp/data/operation-catalog.v1.json
+          else
+            echo "::warning::ORG_APP_DEPLOY_TOKEN is unavailable; skill tool names were not checked against the MCP catalog"
+            python3 scripts/validate.py
+          fi
       - name: Claude plugin and marketplace
         run: |
           claude plugin validate packages/claude --strict
