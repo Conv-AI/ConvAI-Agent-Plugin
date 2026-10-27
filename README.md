@@ -30,15 +30,10 @@ CI fails if they drift.
 
 0.2.9 was approved and published in the ChatGPT plugin directory on 2026-10-27. Earlier submissions (0.1.x and early 0.2.x) were rejected without a specific reason; see CHANGELOG.md for what changed. Lessons that apply to other directories:
 
-- Server side, not package side, decided the outcome. The portal scans the live `tools/list` from `https://mcp-api.convai.com/mcp`, so every tool it sees must work for the reviewer account and match what the listing and skills say.
-  - Tools the reviewer's OAuth token cannot use are hidden from bearer callers (`list_knowledge_documents` is API-key only; convai-api-mcp PR 33).
-  - External MCP server tools are disabled on the hosted server (`CONVAI_MCP_EXTERNAL_MCP_TOOLS_ENABLED=false`, PR 37) because no plan grants `MCP_TOOLS_API`; tool descriptions must not name unregistered tools (PR 38).
-  - Function execution (`test_function`) stays disabled.
-- OAuth: the portal sends the CIMD client ID `https://chatgpt.com/oauth/client.json`, which OpenAI currently serves as 404. Convai Authentication carries a static `OAUTH_CLIENTS` entry for it with redirect `https://chatgpt.com/connector_platform_oauth_redirect` (gcp-app-infra-iac PR 9853).
-- The reviewer account (Scale plan) owns the Workspace and agent used by the test cases. Chat history needs Scale or higher; core authoring needs Professional or higher.
-- Listing text says "agents", not "AI characters"; "Convai" is the brand, not another AI assistant. Put the account, sign-in steps (email and password on the Convai sign-in page, then Approve) and scope notes in the portal's submission context, never in this repository.
-
-Follow-ups are tracked under Jira epic CORE-2009.
+- The review scans the live `tools/list` of `https://mcp-api.convai.com/mcp`, not only this package. Every tool the reviewer sees must work for the reviewer's account and sign-in method, and tool descriptions, the listing and the skills must not mention tools the server does not register. The hosted server therefore hides API-key-only tools from OAuth callers and does not expose function execution or external tool-server management.
+- The portal identifies ChatGPT to the authorization server with an OAuth client ID metadata document URL; the authorization server must recognize that client and its exact redirect URI before Connect works.
+- The reviewer account must already hold every plan entitlement the test cases need; the review cannot include a purchase.
+- Listing text says "agents", not "AI characters". Explain in the submission context that Convai is the product brand, how to sign in (email and password on the Convai sign-in page, then Approve), and what the plugin deliberately does not do. Never put reviewer credentials in this repository.
 
 After a change, build with `python3 scripts/build.py --zip` and upload the versioned OpenAI ZIP in dist/ as an update to the existing plugin. See the [submission guide](https://developers.openai.com/plugins/deploy/submission) for portal steps.
 
