@@ -12,20 +12,24 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    env:
-      # The MCP catalog lives in a private repository. Pull requests from forks
-      # and repositories without access to this secret skip the tool-name check.
-      CATALOG_TOKEN: ${{ secrets.ORG_APP_DEPLOY_TOKEN }}
     steps:
       - uses: actions/checkout@v5
-      - if: env.CATALOG_TOKEN != ''
+      # The MCP catalog lives in a private repository. Pull requests from forks
+      # and repositories without access to the token skip the tool-name check.
+      # Only this step and the checkout below see the token itself.
+      - id: catalog
+        env:
+          CATALOG_TOKEN: ${{ secrets.ORG_APP_DEPLOY_TOKEN }}
+        run: echo "available=$([ -n "$CATALOG_TOKEN" ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+      - if: steps.catalog.outputs.available == 'true'
         uses: actions/checkout@v5
         with:
           repository: Conv-AI/convai-api-mcp
           ref: main
           path: convai-api-mcp
           sparse-checkout: src/convai_api_mcp/data
-          token: ${{ env.CATALOG_TOKEN }}
+          token: ${{ secrets.ORG_APP_DEPLOY_TOKEN }}
+          persist-credentials: false
       - uses: actions/setup-node@v5
         with:
           node-version: 22
@@ -33,8 +37,10 @@ jobs:
       - name: Shared skills are in sync with packages
         run: python3 scripts/build.py --check
       - name: Release checks
+        env:
+          CATALOG_AVAILABLE: ${{ steps.catalog.outputs.available }}
         run: |
-          if [ -n "$CATALOG_TOKEN" ]; then
+          if [ "$CATALOG_AVAILABLE" = true ]; then
             python3 scripts/validate.py --catalog convai-api-mcp/src/convai_api_mcp/data/operation-catalog.v1.json
           else
             echo "::warning::ORG_APP_DEPLOY_TOKEN is unavailable; skill tool names were not checked against the MCP catalog"
