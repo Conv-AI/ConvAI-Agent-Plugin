@@ -51,6 +51,23 @@ def check(cond: bool, msg: str) -> None:
         errors.append(msg)
 
 
+def schema_identifiers(node, found: set[str]) -> None:
+    """Collect property, required and string enum or const names from a JSON schema."""
+    if isinstance(node, dict):
+        for key, value in node.items():
+            if key == "properties" and isinstance(value, dict):
+                found.update(value)
+            elif key == "required" and isinstance(value, list):
+                found.update(v for v in value if isinstance(v, str))
+            elif key in ("enum", "const"):
+                values = value if isinstance(value, list) else [value]
+                found.update(v for v in values if isinstance(v, str))
+            schema_identifiers(value, found)
+    elif isinstance(node, list):
+        for item in node:
+            schema_identifiers(item, found)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -155,7 +172,14 @@ def main() -> int:
     tool_names = None
     if args.catalog:
         catalog = json.loads(args.catalog.read_text())
+        # Skills also name tool arguments, result fields and enum values in
+        # code spans; accept any identifier the catalog's tool and upstream
+        # contract schemas define.
         tool_names = {t["toolName"] for t in catalog["tools"]}
+        for tool in catalog["tools"]:
+            schema_identifiers(tool.get("mcpInputSchema"), tool_names)
+            schema_identifiers(tool.get("mcpOutputSchema"), tool_names)
+        schema_identifiers(catalog.get("contracts"), tool_names)
     skills = sorted((ROOT / "shared" / "skills").glob("*/SKILL.md"))
     check(bool(skills), "no skills in shared/skills")
     for path in skills:
@@ -184,7 +208,7 @@ def main() -> int:
             for tool in set(re.findall(r"`([a-z]+(?:_[a-z]+)+)`", text)):
                 check(
                     tool in tool_names,
-                    f"{rel}: `{tool}` is not a tool in the MCP catalog",
+                    f"{rel}: `{tool}` is not a tool or schema field in the MCP catalog",
                 )
 
     # Nothing shipped may carry credentials or non-production endpoints.

@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.2.9
+
+Approved and published in the ChatGPT plugin directory (2026-10-27). Versions 0.2.0-0.2.8 were OpenAI submission candidates built outside this repository; this release brings the approved package back here.
+
+- Listing and skills use agent terminology: skills are now `agent-inspect`, `agent-author`, `agent-version-review` and `agent-knowledge`; display name "Convai Agent Authoring". The plugin ID and MCP tool names are unchanged.
+- Knowledge: hosted OAuth cannot list the knowledge library, so skills read associations from `get_character` and link only known authorized document IDs.
+- Skills keep the selected `workspace_id` on every call that accepts it, pass expected draft revision IDs for discard, revert and fork, and stop rather than fall back to Personal when a narrative tool lacks Workspace support.
+- External MCP server tools are no longer referenced: the hosted MCP server disables them.
+- `mcp.json` declares OAuth with the provided public client `chatgpt` for the OpenAI package.
+- `plugin.json` carries the OpenAI submission metadata: release notes, no-commerce statement, demo recording and the five positive and three negative test cases (mirrored in shared/review-cases.json).
+- 0.2.9 renames the review fixture Workspace in the test cases to "Plugin Review Workspace".
+- The Claude package and marketplace move to the same version and skills.
+
 ## 0.1.5
 
 - Add general-audience authoring, safeguard preservation, untrusted-content handling and data-minimization instructions to the shared skills.

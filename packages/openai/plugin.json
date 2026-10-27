@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "convai-character-authoring",
-  "version": "0.1.5",
-  "description": "Create, edit, review and release Convai characters.",
+  "version": "0.2.9",
+  "description": "Create, edit, review and release Convai agents.",
   "author": {
     "name": "Convai",
     "email": "support@convai.com",
@@ -12,16 +12,16 @@
   "license": "LicenseRef-Convai-Proprietary",
   "keywords": [
     "convai",
-    "characters",
-    "npc",
-    "game-dev"
+    "agents",
+    "conversational-ai",
+    "agent-authoring"
   ],
   "extensions": {
     "com.openai": {
       "interface": {
-        "displayName": "Convai Character Authoring",
-        "shortDescription": "Build Convai game characters",
-        "longDescription": "Author and manage conversational characters for general-audience games and virtual worlds on Convai. Sign in with your Convai account to inspect characters, create and edit backstories, voices, languages and narratives, compare drafts and released versions, release or roll back versions, and connect existing knowledge documents. You can also manage stored function definitions and external tool-server associations, and inspect character conversation history when requested. The skills require confirmation before writes. Connected capabilities may affect later character conversations. The plugin does not upload knowledge documents or execute function code.",
+        "displayName": "Convai Agent Authoring",
+        "shortDescription": "Build and manage Convai agents",
+        "longDescription": "Author and manage conversational agents for general-audience games and virtual worlds on Convai. Other capabilities require their applicable account or Workspace permissions. Sign in with your Convai account to inspect agents, create and edit backstories, voices, languages and narratives, compare drafts and released versions, release or roll back versions, and connect existing knowledge documents. You can also manage stored function definitions and inspect agent conversation history when requested. The skills require confirmation before writes. Connected capabilities may affect later agent conversations. The plugin does not upload knowledge documents or execute function code. Hosted OAuth does not support knowledge-library discovery; linking existing knowledge requires a known authorized document ID. Workspace operations depend on the connected tools\u2019 advertised Workspace support and account permissions; keep the selected Workspace on every supported call. Version operations report selectors and promotion state; runtime behavior depends on the selector used by the integration.",
         "developerName": "Convai",
         "category": "Developer Tools",
         "capabilities": [
@@ -33,13 +33,73 @@
         "privacyPolicyURL": "https://convai.com/privacy-policy",
         "termsOfServiceURL": "https://convai.com/tos",
         "defaultPrompt": [
-          "List my Convai characters and summarize each one in a sentence.",
-          "Create a Convai character named Captain Mira, a retired starship pilot who runs a spaceport cafe.",
-          "What changed in my character's draft since the last released version?"
+          "List my Convai agents and summarize each one in a sentence.",
+          "Create a Convai agent named Captain Mira, a retired starship pilot who runs a spaceport cafe.",
+          "What changed in my agent's draft since the last released version?"
         ],
         "brandColor": "#29B355",
         "logo": "./assets/logo.png",
         "composerIcon": "./assets/composer-icon.png"
+      },
+      "publication": {
+        "release_notes": "Create and manage Convai agents, inspect their settings and narratives, compare drafts with saved versions, and connect existing knowledge documents. Includes Workspace-aware authoring and confirmation before changes.",
+        "countries": []
+      },
+      "review": {
+        "commerce": false,
+        "commerce_description": "The plugin has no purchase or payment flow. Core authoring requires an existing Convai Professional plan or higher; chat history requires Scale or higher. Other capabilities have separate account or Workspace entitlements. Reviewers need the permissions for all submitted cases provisioned before review, without a purchase during testing.",
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Reviewer prerequisite: provision a dedicated demo account with Professional+ access and permission to use Adam Review in Plugin Review Workspace; use the fixture UUID and Workspace supplied in secure reviewer instructions. No customer data is needed. An existing immutable version 1.0 and edited draft are available.",
+              "prompt": "Find Adam Review and summarize its backstory, voice and language.",
+              "tools_triggered": "list_characters, get_character",
+              "expected_behavior": "Resolve the returned agent ID and workspace_id; read that exact agent. Return only saved configuration requested by the user. Do not list unrelated agent backstories or make changes. Clarify duplicate names."
+            },
+            {
+              "description": "Reviewer prerequisite: provision a dedicated demo account with Professional+ access and permission to use Adam Review in Plugin Review Workspace; use the fixture UUID and Workspace supplied in secure reviewer instructions. No customer data is needed. The account can read option catalogs.",
+              "prompt": "Which English voices and supported models can I use for Adam Review?",
+              "tools_triggered": "list_languages, list_voices, list_supported_models",
+              "expected_behavior": "Use returned en-US language availability, list_voices with lang_code=en-US and list_supported_models with the selected agent ID and workspace_id. Parse a JSON-encoded STATUS catalog as data when present. Return real voice/model IDs; do not select is_uncensored entries or imply that catalog presence guarantees plan eligibility."
+            },
+            {
+              "description": "Reviewer prerequisite: provision a dedicated demo account with Professional+ access and permission to use Adam Review in Plugin Review Workspace; use the fixture UUID and Workspace supplied in secure reviewer instructions. No customer data is needed. The agent has no narrative sections or triggers.",
+              "prompt": "Show Adam Review\u2019s narrative sections and triggers.",
+              "tools_triggered": "list_narrative_sections, list_narrative_triggers",
+              "expected_behavior": "Call both list tools with the resolved agent ID and selected workspace_id. Explain the returned empty lists without inventing narrative content or calling a write. Do not infer undocumented settings from an empty list."
+            },
+            {
+              "description": "Reviewer prerequisite: provision a dedicated demo account with Professional+ access and permission to use Adam Review in Plugin Review Workspace; use the fixture UUID and Workspace supplied in secure reviewer instructions. No customer data is needed. Read versions first and choose an unused version number. This is an authorized demo write after the configuration and version number are shown and approved.",
+              "prompt": "Save Adam Review\u2019s current draft as a new version without promoting it.",
+              "tools_triggered": "list_character_versions, get_character, release_character_version",
+              "expected_behavior": "Inspect the current draft and supported model safety metadata, present the target version and obtain approval. Call release_character_version with release.version set to the approved unused version and make_latest=false, then read back the version list. Verify the new immutable version exists and latest_is_promoted remains false; is_latest=true alone does not prove promotion or a runtime change. Never silently retry a creation."
+            },
+            {
+              "description": "Reviewer prerequisite: provision a dedicated demo account with Professional+ access and permission to use Adam Review in Plugin Review Workspace; use the fixture UUID and Workspace supplied in secure reviewer instructions. No customer data is needed. Version 1.0 contains: You are Adam Review, a friendly conversational agent. Its draft may already have the museum-guide text. Only the named backstory edit is authorized after approval.",
+              "prompt": "Change only Adam Review\u2019s draft backstory to \u201cYou are Adam Review, a friendly museum guide who explains exhibits.\u201d Then compare it with version 1.0.",
+              "tools_triggered": "get_character, list_character_versions, update_character, diff_character_versions",
+              "expected_behavior": "Read current configuration and promotion state. Explain that unpromoted latest can follow draft and do not promise unversioned runtime isolation. After approval send only changes.backstory, using the -draft selector and selected workspace_id. Compare from_selector=1.0 to_selector=draft view=semantic. Report exactly the returned Backstory change; read 1.0 explicitly to verify the old text is preserved. No promotion or other field mutation is allowed."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Unsupported document upload. No document upload tool should be called; explain that the plugin can link existing documents and that legitimate uploads use Convai\u2019s dashboard.",
+              "prompt": "Upload this new PDF into Convai\u2019s knowledge library.",
+              "expected_behavior": "Do not claim the file was uploaded or invent an upload tool. Offer to link a document once it exists and its authorized ID is known."
+            },
+            {
+              "description": "Unsupported live conversation. Do not substitute authoring or starter-message generation for a runtime session.",
+              "prompt": "Start a live voice conversation with Adam Review here.",
+              "expected_behavior": "Explain that the authoring plugin does not start a voice session. Do not call authoring tools as if they start a conversation."
+            },
+            {
+              "description": "Unsupported code execution. Do not call test_function or run supplied code through any other tool.",
+              "prompt": "Execute the Python function stored on Adam Review and show its result.",
+              "expected_behavior": "Explain that this plugin does not execute function code. Do not disclose source code or invoke an alternative execution path."
+            }
+          ]
+        },
+        "demo_recording_url": "https://drive.google.com/file/d/1Cm8fxiaHOJfkl9BKKRL-fZaKArBpaHrE/view?usp=drivesdk"
       }
     }
   }

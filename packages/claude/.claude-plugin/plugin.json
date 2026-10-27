@@ -1,9 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "convai-character-authoring",
-  "displayName": "Convai Character Authoring",
-  "version": "0.1.5",
-  "description": "Create, edit, review and release Convai AI characters from Claude Code.",
+  "displayName": "Convai Agent Authoring",
+  "version": "0.2.9",
+  "description": "Create, edit, review and release Convai agents from Claude Code.",
   "author": {
     "name": "Convai",
     "email": "support@convai.com",
@@ -14,9 +14,8 @@
   "license": "LicenseRef-Convai-Proprietary",
   "keywords": [
     "convai",
-    "characters",
-    "npc",
+    "agents",
     "conversational-ai",
-    "game-dev"
+    "agent-authoring"
   ]
 }

@@ -1,18 +1,18 @@
-# Convai Character Authoring - agent plugins
+# Convai Agent Authoring - agent plugins
 
-Plugin packages that let ChatGPT, Codex, Claude and Claude Code build and manage Convai AI
-characters through the Convai MCP server (`https://mcp-api.convai.com/mcp`). Users sign in
+Plugin packages that let ChatGPT, Codex, Claude and Claude Code build and manage Convai
+agents through the Convai MCP server (`https://mcp-api.convai.com/mcp`). Users sign in
 with their Convai account (OAuth 2.1 at `https://login.convai.com`); the packages contain no
 credentials.
 
 ```text
 shared/
   skills/                      # source of truth for every platform
-    character-inspect/         # read-only lookup and summaries
-    character-author/          # create / edit / delete, narrative, functions
-    character-version-review/  # diff, release, promote, roll back
-    knowledge-association/     # connect existing knowledge documents
-  review-cases.json            # starter prompts + 5 positive / 3 negative review cases
+    agent-inspect/             # read-only lookup and summaries
+    agent-author/              # create / edit / delete, narrative, functions
+    agent-version-review/      # diff, release, promote, roll back
+    agent-knowledge/           # connect existing knowledge documents
+  review-cases.json            # starter prompts + the 5 positive / 3 negative cases submitted to OpenAI
 packages/
   openai/                      # OpenAI portable plugin (ChatGPT + Codex)
     plugin.json  mcp.json  skills/
@@ -26,23 +26,21 @@ scripts/validate.py            # release checks (versions, prod URL, scopes, sec
 `packages/*/skills/` are generated: edit `shared/skills/` and run `python3 scripts/build.py`.
 CI fails if they drift.
 
-## OpenAI resubmission status (0.1.5)
+## OpenAI listing status (0.2.9)
 
-This candidate updates the skills and listing against the [OpenAI plugin guidelines](https://developers.openai.com/plugins/plugin-guidelines). It is not a declaration that the remote service passed policy review. The rejection email did not identify a specific offending behavior. Changes to wording alone cannot resolve a backend policy violation.
+0.2.9 was approved and published in the ChatGPT plugin directory on 2026-10-27. Earlier submissions (0.1.x and early 0.2.x) were rejected without a specific reason; see CHANGELOG.md for what changed. Lessons that apply to other directories:
 
-The package now instructs the host to preserve safeguards, treat retrieved content as data, limit sensitive-data access and check historical configurations before activation. These instructions are not a server security boundary. This repository contains no MCP server implementation, deployed tool annotations or published privacy-policy source.
+- Server side, not package side, decided the outcome. The portal scans the live `tools/list` from `https://mcp-api.convai.com/mcp`, so every tool it sees must work for the reviewer account and match what the listing and skills say.
+  - Tools the reviewer's OAuth token cannot use are hidden from bearer callers (`list_knowledge_documents` is API-key only; convai-api-mcp PR 33).
+  - External MCP server tools are disabled on the hosted server (`CONVAI_MCP_EXTERNAL_MCP_TOOLS_ENABLED=false`, PR 37) because no plan grants `MCP_TOOLS_API`; tool descriptions must not name unregistered tools (PR 38).
+  - Function execution (`test_function`) stays disabled.
+- OAuth: the portal sends the CIMD client ID `https://chatgpt.com/oauth/client.json`, which OpenAI currently serves as 404. Convai Authentication carries a static `OAUTH_CLIENTS` entry for it with redirect `https://chatgpt.com/connector_platform_oauth_redirect` (gcp-app-infra-iac PR 9853).
+- The reviewer account (Scale plan) owns the Workspace and agent used by the test cases. Chat history needs Scale or higher; core authoring needs Professional or higher.
+- Listing text says "agents", not "AI characters"; "Convai" is the brand, not another AI assistant. Put the account, sign-in steps (email and password on the Convai sign-in page, then Approve) and scope notes in the portal's submission context, never in this repository.
 
-Before resubmitting, complete these checks in the MCP service and review portal:
+Follow-ups are tracked under Jira epic CORE-2009.
 
-- Enforce the intended safety boundaries on the server, including direct create/update requests, generation, cloning, release, promotion and draft restoration. Verify that model selection and nested configuration objects cannot bypass those boundaries. The is_uncensored label is a reason to investigate behavior, not proof of a policy violation. This package conservatively excludes those entries from authoring and activation.
-- Inspect the actual tools/list response. Confirm explicit boolean readOnlyHint, destructiveHint and openWorldHint annotations match each operation. Describe auto-created Experiences, overwrites, publication and outbound network contacts accurately. Each callable operation must be individually exposed; discovery must not become a generic executor for unreviewed tools.
-- Check authorization for every character, version, document, function and external-server ID. Verify that tool results redact stored credentials and that external-server testing cannot reach unauthorized destinations. Configuration of a function must remain distinct from executing it.
-- Verify the published privacy policy covers character content, knowledge associations, character conversation history, recipients, retention and user controls. Validate scopes and secure sign-in; do not put reviewer credentials in this repository or ZIP.
-- Run the five positive and three negative cases in shared/review-cases.json, plus supplementalNegative internally, against isolated fixtures. Record actual results and backend rejection evidence separately; verificationStatus starts as not_run. Passing the package validator does not run these scenarios. Test the supported ChatGPT desktop and mobile flows.
-- Provide an accessible walkthrough, working reviewer account, release notes and any requested policy attestations in the submission portal. The build currently packages packages/openai only: shared/review-cases.json is preparation material and is not automatically imported from the ZIP. Enter the cases in the portal's review fields and confirm they were saved.
-- Request the specific policy section and observed failure from the review team if the rejection remains unclear. Do not claim the issue is resolved until the corresponding behavior has been verified.
-
-After verification, build with `python3 scripts/build.py --zip` and upload the versioned OpenAI ZIP in dist/. See the [submission guide](https://developers.openai.com/plugins/deploy/submission) for portal steps.
+After a change, build with `python3 scripts/build.py --zip` and upload the versioned OpenAI ZIP in dist/ as an update to the existing plugin. See the [submission guide](https://developers.openai.com/plugins/deploy/submission) for portal steps.
 
 ## Install
 
@@ -50,15 +48,14 @@ After verification, build with `python3 scripts/build.py --zip` and upload the v
 
 ```text
 /plugin marketplace add Conv-AI/ConvAI-Agent-Plugin
-/plugin install convai-character-authoring@convai
+/plugin install convai-character-authoring@convai   # plugin ID is unchanged
 /mcp        # convai -> Authenticate
 ```
 
 **Claude (web, Desktop)**: Settings -> Connectors -> Convai (after directory listing), or add a
 custom connector with URL `https://mcp-api.convai.com/mcp` and OAuth Client ID `claude`.
 
-**ChatGPT and Codex**: install *Convai Character Authoring* from the plugin directory (after
-OpenAI approval) and sign in to Convai when prompted.
+**ChatGPT and Codex**: install *Convai Agent Authoring* from the plugin directory and sign in to Convai when prompted.
 
 ## Develop
 

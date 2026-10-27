@@ -3,7 +3,19 @@
   "mcpServers": {
     "convai": {
       "type": "streamable-http",
-      "url": "https://mcp-api.convai.com/mcp"
+      "url": "https://mcp-api.convai.com/mcp",
+      "extensions": {
+        "com.openai": {
+          "auth": {
+            "type": "oauth",
+            "client": {
+              "mode": "provided",
+              "clientId": "chatgpt",
+              "tokenEndpointAuthMethod": "none"
+            }
+          }
+        }
+      }
     }
   }
 }
