@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "convai-character-authoring",
-  "version": "0.1.5",
-  "description": "Create, edit, review and release Convai characters.",
+  "version": "0.2.9",
+  "description": "Create, edit, review and release Convai agents.",
   "author": {
     "name": "Convai",
     "email": "support@convai.com",
@@ -12,16 +12,16 @@
   "license": "LicenseRef-Convai-Proprietary",
   "keywords": [
     "convai",
-    "characters",
-    "npc",
-    "game-dev"
+    "agents",
+    "conversational-ai",
+    "agent-authoring"
   ],
   "extensions": {
     "com.openai": {
       "interface": {
-        "displayName": "Convai Character Authoring",
-        "shortDescription": "Build Convai game characters",
-        "longDescription": "Author and manage conversational characters for general-audience games and virtual worlds on Convai. Sign in with your Convai account to inspect characters, create and edit backstories, voices, languages and narratives, compare drafts and released versions, release or roll back versions, and connect existing knowledge documents. You can also manage stored function definitions and external tool-server associations, and inspect character conversation history when requested. The skills require confirmation before writes. Connected capabilities may affect later character conversations. The plugin does not upload knowledge documents or execute function code.",
+        "displayName": "Convai Agent Authoring",
+        "shortDescription": "Build and manage Convai agents",
+        "longDescription": "Author and manage conversational agents for general-audience games and virtual worlds on Convai. Other capabilities require their applicable account or Workspace permissions. Sign in with your Convai account to inspect agents, create and edit backstories, voices, languages and narratives, compare drafts and released versions, release or roll back versions, and connect existing knowledge documents. You can also manage stored function definitions and inspect agent conversation history when requested. The skills require confirmation before writes. Connected capabilities may affect later agent conversations. The plugin does not upload knowledge documents or execute function code. Hosted OAuth does not support knowledge-library discovery; linking existing knowledge requires a known authorized document ID. Workspace operations depend on the connected tools’ advertised Workspace support and account permissions; keep the selected Workspace on every supported call. Version operations report selectors and promotion state; runtime behavior depends on the selector used by the integration.",
         "developerName": "Convai",
         "category": "Developer Tools",
         "capabilities": [
@@ -33,13 +33,17 @@
         "privacyPolicyURL": "https://convai.com/privacy-policy",
         "termsOfServiceURL": "https://convai.com/tos",
         "defaultPrompt": [
-          "List my Convai characters and summarize each one in a sentence.",
-          "Create a Convai character named Captain Mira, a retired starship pilot who runs a spaceport cafe.",
-          "What changed in my character's draft since the last released version?"
+          "List my Convai agents and summarize each one in a sentence.",
+          "Create a Convai agent named Captain Mira, a retired starship pilot who runs a spaceport cafe.",
+          "What changed in my agent's draft since the last released version?"
         ],
         "brandColor": "#29B355",
         "logo": "./assets/logo.png",
         "composerIcon": "./assets/composer-icon.png"
+      },
+      "publication": {
+        "release_notes": "Create and manage Convai agents, inspect their settings and narratives, compare drafts with saved versions, and connect existing knowledge documents. Includes Workspace-aware authoring and confirmation before changes.",
+        "countries": []
       }
     }
   }
