@@ -8,7 +8,7 @@
   },
   "homepage": "https://convai.com",
   "repository": "https://github.com/Conv-AI/ConvAI-Agent-Plugin",
-  "license": "LicenseRef-Convai-Proprietary",
+  "license": "Apache-2.0",
   "keywords": [
     "convai",
     "agents",
