@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Grok Bot package (`packages/grok-bot`): `.grok-plugin/plugin.json`, skills, logo and `.mcp.json` with the static OAuth client `grok-bot`.
+
 ## 0.2.9
 
 Approved and published in the ChatGPT plugin directory (2026-10-27). Versions 0.2.0-0.2.8 were OpenAI submission candidates built outside this repository; this release brings the approved package back here.

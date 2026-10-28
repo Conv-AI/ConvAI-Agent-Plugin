@@ -79,6 +79,7 @@ def main() -> int:
 
     openai = load("packages/openai/plugin.json")
     claude = load("packages/claude/.claude-plugin/plugin.json")
+    grok = load("packages/grok-bot/.grok-plugin/plugin.json")
     market = load(".claude-plugin/marketplace.json")
     entry = next(
         (p for p in market["plugins"] if p["name"] == claude["name"]),
@@ -88,13 +89,14 @@ def main() -> int:
 
     # One product, one version everywhere.
     check(
-        openai["name"] == claude["name"],
+        openai["name"] == claude["name"] == grok["name"],
         "plugin names differ between packages",
     )
     check(entry is not None, "marketplace does not list the Claude plugin")
     versions = {
         openai["version"],
         claude["version"],
+        grok["version"],
         market.get("version"),
         entry and entry.get("version"),
     }
@@ -107,7 +109,11 @@ def main() -> int:
         check(key in openai, f"packages/openai/plugin.json missing {key}")
 
     # Production endpoint only; scopes limited to what is published.
-    for rel in ("packages/openai/mcp.json", "packages/claude/.mcp.json"):
+    for rel in (
+        "packages/openai/mcp.json",
+        "packages/claude/.mcp.json",
+        "packages/grok-bot/.mcp.json",
+    ):
         if not (ROOT / rel).is_file():
             errors.append(
                 f"{rel} is missing: the plugin would ship without "
@@ -119,7 +125,14 @@ def main() -> int:
                 server.get("url") == PRODUCTION_MCP_URL,
                 f"{rel}:{name} url must be {PRODUCTION_MCP_URL}",
             )
-            extra = set(server.get("scopes", [])) - PUBLISHED_SCOPES
+            if rel.startswith("packages/grok-bot/"):
+                check(
+                    server.get("auth", {}).get("CLIENT_ID") == "grok-bot",
+                    f"{rel}:{name} auth.CLIENT_ID must be grok-bot (no DCR on Convai Auth)",
+                )
+            requested = set(server.get("scopes", []))
+            requested |= set(server.get("auth", {}).get("scopes", []))
+            extra = requested - PUBLISHED_SCOPES
             check(
                 not extra,
                 f"{rel}:{name} requests unpublished scopes {sorted(extra)}",

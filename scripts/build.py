@@ -22,8 +22,9 @@ SHARED = ROOT / "shared" / "skills"
 PACKAGES = {
     "openai": ROOT / "packages" / "openai",
     "claude": ROOT / "packages" / "claude",
+    "grok-bot": ROOT / "packages" / "grok-bot",
 }
-MCP_FILES = {"openai": "mcp.json", "claude": ".mcp.json"}
+MCP_FILES = {"openai": "mcp.json", "claude": ".mcp.json", "grok-bot": ".mcp.json"}
 
 
 def drifted(a: Path, b: Path) -> bool:
@@ -80,7 +81,7 @@ def main() -> int:
 
     for pkg in PACKAGES.values():
         sync(pkg / "skills")
-    print("synced skills into packages/openai and packages/claude")
+    print(f"synced skills into {', '.join(f'packages/{name}' for name in PACKAGES)}")
 
     if args.mcp_url:
         out = (args.out or ROOT / "dist" / "custom").resolve()
