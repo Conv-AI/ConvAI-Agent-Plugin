@@ -80,6 +80,7 @@ def main() -> int:
     openai = load("packages/openai/plugin.json")
     claude = load("packages/claude/.claude-plugin/plugin.json")
     grok = load("packages/grok-bot/.cursor-plugin/plugin.json")
+    cursor_market = load(".cursor-plugin/marketplace.json")
     market = load(".claude-plugin/marketplace.json")
     entry = next(
         (p for p in market["plugins"] if p["name"] == claude["name"]),
@@ -93,6 +94,11 @@ def main() -> int:
         "plugin names differ between packages",
     )
     check(entry is not None, "marketplace does not list the Claude plugin")
+    check(
+        [p.get("source") for p in cursor_market.get("plugins", []) if p.get("name") == grok["name"]]
+        == ["packages/grok-bot"],
+        ".cursor-plugin/marketplace.json must list the Grok Bot plugin once, source packages/grok-bot",
+    )
     versions = {
         openai["version"],
         claude["version"],

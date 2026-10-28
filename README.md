@@ -21,6 +21,7 @@ packages/
   grok-bot/                    # Grok Bot plugin (Cursor plugin format, static OAuth client grok-bot)
     .cursor-plugin/plugin.json  mcp.json  assets/  skills/
 .claude-plugin/marketplace.json  # this repo is a Claude Code marketplace
+.cursor-plugin/marketplace.json  # and a Cursor / Grok Bot marketplace (packages/grok-bot)
 scripts/build.py               # sync skills, --check for drift, --zip
 scripts/validate.py            # release checks (versions, prod URL, scopes, secrets, tool names)
 ```
