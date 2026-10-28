@@ -1,0 +1,13 @@
+{
+  "name": "convai",
+  "owner": {
+    "name": "Convai",
+    "email": "support@convai.com"
+  },
+  "plugins": [
+    {
+      "name": "convai-character-authoring",
+      "source": "packages/grok-bot"
+    }
+  ]
+}

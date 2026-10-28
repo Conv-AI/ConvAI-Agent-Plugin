@@ -1,0 +1,19 @@
+{
+  "name": "convai-character-authoring",
+  "version": "0.2.9",
+  "description": "Create, edit, review and release Convai agents.",
+  "author": {
+    "name": "Convai",
+    "email": "support@convai.com"
+  },
+  "homepage": "https://convai.com",
+  "repository": "https://github.com/Conv-AI/ConvAI-Agent-Plugin",
+  "license": "Apache-2.0",
+  "keywords": [
+    "convai",
+    "agents",
+    "conversational-ai",
+    "agent-authoring"
+  ],
+  "logo": "assets/logo.png"
+}

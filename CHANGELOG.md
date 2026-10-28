@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Grok Bot package (`packages/grok-bot`): `.cursor-plugin/plugin.json` (Cursor plugin format, which Grok Bot installs), skills, logo and a root `mcp.json` with the static OAuth client `grok-bot`.
+- The Grok Bot package is licensed Apache-2.0 (`packages/grok-bot/LICENSE`), because the Cursor marketplace only lists open-source plugins; the OpenAI and Claude packages stay proprietary.
+- `.cursor-plugin/marketplace.json` at the repo root lists `packages/grok-bot`, so Cursor and Grok Bot marketplace submissions find the plugin from the repository link.
+
 ## 0.2.9
 
 Approved and published in the ChatGPT plugin directory (2026-10-27). Versions 0.2.0-0.2.8 were OpenAI submission candidates built outside this repository; this release brings the approved package back here.
