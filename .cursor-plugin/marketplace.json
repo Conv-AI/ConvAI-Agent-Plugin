@@ -6,7 +6,7 @@
   },
   "plugins": [
     {
-      "name": "convai-character-authoring",
+      "name": "convai-agent-authoring",
       "source": "packages/grok-bot"
     }
   ]

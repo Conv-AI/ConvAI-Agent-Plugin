@@ -46,7 +46,7 @@ After a change, build with `python3 scripts/build.py --zip` and upload the versi
 
 ```text
 /plugin marketplace add Conv-AI/ConvAI-Agent-Plugin
-/plugin install convai-character-authoring@convai   # plugin ID is unchanged
+/plugin install convai-agent-authoring@convai   # renamed from convai-character-authoring in 0.3.0
 /mcp        # convai -> Authenticate
 ```
 

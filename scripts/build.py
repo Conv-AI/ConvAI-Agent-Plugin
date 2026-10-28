@@ -98,7 +98,7 @@ def main() -> int:
 
     if args.zip:
         for name, pkg in PACKAGES.items():
-            archive = f"convai-character-authoring-{name}-{version()}.zip"
+            archive = f"convai-agent-authoring-{name}-{version()}.zip"
             zip_dir(pkg, ROOT / "dist" / archive)
     return 0
 
