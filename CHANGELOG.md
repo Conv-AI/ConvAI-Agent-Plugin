@@ -1,7 +1,8 @@
 # Changelog
 
-## Unreleased
+## 0.3.0
 
+- Plugin ID renamed from `convai-character-authoring` to `convai-agent-authoring` in every package (OpenAI, Claude Code, Grok Bot) and both marketplaces; release ZIPs are now `convai-agent-authoring-<platform>-<version>.zip`. Claude Code users reinstall with `/plugin install convai-agent-authoring@convai`. The ChatGPT listing was approved under the old ID, so check the portal accepts the renamed package before publishing.
 - Grok Bot package (`packages/grok-bot`): `.cursor-plugin/plugin.json` (Cursor plugin format, which Grok Bot installs), skills, logo and a root `mcp.json` with the static OAuth client `grok-bot`.
 - The Grok Bot package is licensed Apache-2.0 (`packages/grok-bot/LICENSE`), because the Cursor marketplace only lists open-source plugins; the OpenAI and Claude packages stay proprietary.
 - `.cursor-plugin/marketplace.json` at the repo root lists `packages/grok-bot`, so Cursor and Grok Bot marketplace submissions find the plugin from the repository link.

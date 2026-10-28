@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
-  "name": "convai-character-authoring",
+  "name": "convai-agent-authoring",
   "displayName": "Convai Agent Authoring",
-  "version": "0.2.9",
+  "version": "0.3.0",
   "description": "Create, edit, review and release Convai agents from Claude Code.",
   "author": {
     "name": "Convai",
