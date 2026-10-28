@@ -24,7 +24,7 @@ PACKAGES = {
     "claude": ROOT / "packages" / "claude",
     "grok-bot": ROOT / "packages" / "grok-bot",
 }
-MCP_FILES = {"openai": "mcp.json", "claude": ".mcp.json", "grok-bot": ".mcp.json"}
+MCP_FILES = {"openai": "mcp.json", "claude": ".mcp.json", "grok-bot": "mcp.json"}
 
 
 def drifted(a: Path, b: Path) -> bool:

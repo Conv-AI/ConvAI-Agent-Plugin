@@ -79,7 +79,7 @@ def main() -> int:
 
     openai = load("packages/openai/plugin.json")
     claude = load("packages/claude/.claude-plugin/plugin.json")
-    grok = load("packages/grok-bot/.grok-plugin/plugin.json")
+    grok = load("packages/grok-bot/.cursor-plugin/plugin.json")
     market = load(".claude-plugin/marketplace.json")
     entry = next(
         (p for p in market["plugins"] if p["name"] == claude["name"]),
@@ -112,7 +112,7 @@ def main() -> int:
     for rel in (
         "packages/openai/mcp.json",
         "packages/claude/.mcp.json",
-        "packages/grok-bot/.mcp.json",
+        "packages/grok-bot/mcp.json",
     ):
         if not (ROOT / rel).is_file():
             errors.append(

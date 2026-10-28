@@ -18,8 +18,8 @@ packages/
     plugin.json  mcp.json  skills/
   claude/                      # Claude Code plugin
     .claude-plugin/plugin.json  .mcp.json  skills/
-  grok-bot/                    # Grok Bot plugin (Cursor MCP client, static OAuth client grok-bot)
-    .grok-plugin/plugin.json  .mcp.json  assets/  skills/
+  grok-bot/                    # Grok Bot plugin (Cursor plugin format, static OAuth client grok-bot)
+    .cursor-plugin/plugin.json  mcp.json  assets/  skills/
 .claude-plugin/marketplace.json  # this repo is a Claude Code marketplace
 scripts/build.py               # sync skills, --check for drift, --zip
 scripts/validate.py            # release checks (versions, prod URL, scopes, secrets, tool names)
@@ -63,15 +63,15 @@ claude plugin validate packages/claude --strict && claude plugin validate .
 
 ## Test the Grok Bot package
 
-Grok Bot uses Cursor's MCP client. Convai Auth has no dynamic client registration, so
-`packages/grok-bot/.mcp.json` sets the static client `grok-bot` (`auth.CLIENT_ID`). Auth must
+Grok Bot uses Cursor's plugin format and MCP client: the manifest is `.cursor-plugin/plugin.json` and the MCP config is the root `mcp.json`. Convai Auth has no dynamic client registration, so
+`packages/grok-bot/mcp.json` sets the static client `grok-bot` (`auth.CLIENT_ID`). Auth must
 register it with Cursor's fixed callbacks: `https://www.cursor.com/agents/mcp/oauth/callback`
 (cloud agents, Grok Bot) and `http://localhost:8787/callback` (desktop).
 
 1. Build a staging copy: `python3 scripts/build.py --mcp-url https://mcp-api-stg.convai.com/mcp --out dist/stg`
    (writes `dist/stg/grok-bot`).
 2. Local sign-in check with the same client, in Cursor desktop: put the `convai` entry from
-   `dist/stg/grok-bot/.mcp.json` in `.cursor/mcp.json`, open MCP settings, Connect, sign in to
+   `dist/stg/grok-bot/mcp.json` in `.cursor/mcp.json`, open MCP settings, Connect, sign in to
    Convai (stg) and Allow. Run "List my Convai agents".
 3. In Grok Bot: install the plugin from this repository (or the `dist/stg/grok-bot` folder
    pushed to a test branch), click Authenticate, sign in and run the same prompt.

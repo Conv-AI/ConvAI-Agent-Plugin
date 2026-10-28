@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- Grok Bot package (`packages/grok-bot`): `.grok-plugin/plugin.json`, skills, logo and `.mcp.json` with the static OAuth client `grok-bot`.
+- Grok Bot package (`packages/grok-bot`): `.cursor-plugin/plugin.json` (Cursor plugin format, which Grok Bot installs), skills, logo and a root `mcp.json` with the static OAuth client `grok-bot`.
 
 ## 0.2.9
 
