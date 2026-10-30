@@ -36,6 +36,8 @@ jobs:
       - run: npm install -g @anthropic-ai/claude-code
       - name: Shared skills are in sync with packages
         run: python3 scripts/build.py --check
+      - name: Public documentation regression tests
+        run: python3 -m unittest discover -s tests
       - name: Release checks
         env:
           CATALOG_AVAILABLE: ${{ steps.catalog.outputs.available }}

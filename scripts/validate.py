@@ -34,8 +34,18 @@ SECRET = re.compile(
 )
 NON_PROD_HOST = re.compile(
     r"(?:-stg|-preview|-dev)\.convai\.com"
-    r"|localhost(?!:8080\b)"
-    r"|127\.0\.0\.1"
+    r"|\blocalhost\b"
+    r"|127\.0\.0\.1",
+    re.I,
+)
+INTERNAL_REFERENCE = re.compile(
+    r"convaixr\.atlassian\.net"
+    r"|conv-ai\.slack\.com"
+    r"|console\.cloud\.google\.com"
+    r"|(?:[a-z0-9-]+\.)*internal\.convai\.com"
+    r"|\bprj-cs-[a-z0-9-]+"
+    r"|\bCORE-\d+\b",
+    re.I,
 )
 FRONTMATTER = re.compile(r"\A---\n(.*?)\n---\n", re.S)
 
@@ -49,6 +59,19 @@ def load(rel: str):
 def check(cond: bool, msg: str) -> None:
     if not cond:
         errors.append(msg)
+
+
+def public_documentation_errors(text: str) -> list[str]:
+    """Keep private operational references out of the public entry point."""
+    return [
+        f"README.md: {message}"
+        for pattern, message in (
+            (SECRET, "looks like it contains a credential"),
+            (NON_PROD_HOST, "references a non-production host"),
+            (INTERNAL_REFERENCE, "references internal operational information"),
+        )
+        if pattern.search(text)
+    ]
 
 
 def schema_identifiers(node, found: set[str]) -> None:
@@ -76,6 +99,7 @@ def main() -> int:
         help="convai-api-mcp operation-catalog.v1.json",
     )
     args = parser.parse_args()
+    errors.extend(public_documentation_errors((ROOT / "README.md").read_text()))
 
     openai = load("packages/openai/plugin.json")
     claude = load("packages/claude/.claude-plugin/plugin.json")
