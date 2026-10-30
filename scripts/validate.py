@@ -35,7 +35,8 @@ SECRET = re.compile(
 NON_PROD_HOST = re.compile(
     r"(?:-stg|-preview|-dev)\.convai\.com"
     r"|localhost(?!:8080\b)"
-    r"|127\.0\.0\.1"
+    r"|127\.0\.0\.1",
+    re.I,
 )
 INTERNAL_REFERENCE = re.compile(
     r"convaixr\.atlassian\.net"

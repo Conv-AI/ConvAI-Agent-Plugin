@@ -23,6 +23,7 @@ class PublicDocumentationTests(unittest.TestCase):
             "https://fixture-stg.convai.com/mcp",
             "https://fixture-preview.convai.com",
             "https://fixture-dev.convai.com",
+            "HTTPS://FIXTURE-STG.CONVAI.COM/mcp",
         ):
             with self.subTest(host=host):
                 self.assertIn(
