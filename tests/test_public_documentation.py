@@ -24,6 +24,11 @@ class PublicDocumentationTests(unittest.TestCase):
             "https://fixture-preview.convai.com",
             "https://fixture-dev.convai.com",
             "HTTPS://FIXTURE-STG.CONVAI.COM/mcp",
+            "http://localhost/mcp",
+            "http://localhost:8080/mcp",
+            "http://localhost:8081/mcp",
+            "HTTP://LOCALHOST:8080/mcp",
+            "http://127.0.0.1:8080/mcp",
         ):
             with self.subTest(host=host):
                 self.assertIn(
