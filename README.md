@@ -33,9 +33,10 @@ CI fails if they drift.
 
 ### ChatGPT and Codex
 
-Install **Convai Agent Authoring** from your application's plugin directory and sign
-in with your Convai account when prompted. Review the requested permissions before
-approving access. You do not need an API key, the Convai CLI, or a local MCP server.
+Install [Convai Agent Authoring](https://chatgpt.com/plugins/plugin_asdk_app_6ac4cf6467048191a51888a2600180da)
+from your application's plugin directory and sign in with your Convai account
+when prompted. Review the requested permissions before approving access. You do
+not need an API key, the Convai CLI, or a local MCP server.
 
 The published OpenAI package is **0.2.9**, with package ID
 `convai-character-authoring`. The **0.3.0** rename to `convai-agent-authoring` in
