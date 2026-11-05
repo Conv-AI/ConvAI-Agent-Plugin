@@ -26,5 +26,8 @@
         "agent-authoring"
       ]
     }
-  ]
+  ],
+  "renames": {
+    "convai-character-authoring": "convai-agent-authoring"
+  }
 }
