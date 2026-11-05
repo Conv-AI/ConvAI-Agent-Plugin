@@ -17,7 +17,7 @@ Sign in with your Convai account when the browser opens, then approve access. Yo
 - **agent-inspect**: read-only lookup and summaries of your agents.
 - **agent-author**: create, edit, clone or delete agents and their narrative. Asks before every write.
 - **agent-version-review**: diff versions, release, promote, roll back or discard draft changes.
-- **agent-knowledge**: connect or disconnect existing knowledge bank documents.
+- **agent-knowledge**: connect or disconnect existing knowledge bank documents. The hosted connection cannot browse or search your knowledge library, so give the document ID (or pick the document in the [Convai dashboard](https://convai.com/dashboard)); Claude cannot find a document by name alone.
 
 ## What the plugin connects to and sends
 
