@@ -10,6 +10,7 @@
     "url": "https://convai.com"
   },
   "homepage": "https://convai.com",
+  "privacyPolicyUrl": "https://convai.com/privacy-policy",
   "repository": "https://github.com/Conv-AI/ConvAI-Agent-Plugin",
   "license": "LicenseRef-Convai-Proprietary",
   "keywords": [
