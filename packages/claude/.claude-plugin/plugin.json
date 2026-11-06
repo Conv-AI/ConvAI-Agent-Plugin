@@ -10,7 +10,10 @@
     "url": "https://convai.com"
   },
   "homepage": "https://convai.com",
+  "documentationUrl": "https://github.com/Conv-AI/ConvAI-Agent-Plugin/tree/main/packages/claude#readme",
+  "supportUrl": "https://forum.convai.com",
   "privacyPolicyUrl": "https://convai.com/privacy-policy",
+  "termsOfServiceUrl": "https://convai.com/tos",
   "repository": "https://github.com/Conv-AI/ConvAI-Agent-Plugin",
   "license": "LicenseRef-Convai-Proprietary",
   "keywords": [
