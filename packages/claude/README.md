@@ -24,7 +24,7 @@ Sign in with your Convai account when the browser opens, then approve access. Yo
 The plugin contains only skills (Markdown instructions) and one remote MCP server. It runs no local code, hooks or scripts.
 
 - **MCP server**: `https://mcp-api.convai.com/mcp`, operated by Convai. Claude sends tool requests there, including the agent details you ask it to create or change (names, backstories, voice and narrative settings) and identifiers of agents, versions and knowledge documents.
-- **Sign-in**: OAuth 2.1 with PKCE through `https://login.convai.com`, using the public client `claude-code` and a local callback on port 8080. The plugin holds no credentials; Claude Code stores the issued token.
+- **Sign-in**: OAuth 2.1 with PKCE through `https://login.convai.com`. Claude identifies itself with its Client ID Metadata Document, so the plugin ships no client ID, key or other credential; Claude stores the issued token.
 - **Scopes requested**: `character:read`, `character:write`, `backstory:generate`, `chat-history:read`, `knowledge-bank:read`, `knowledge-bank:write`.
 - Changes are written to your Convai account. The plugin cannot upload or delete knowledge documents, run custom functions, or make purchases.
 
