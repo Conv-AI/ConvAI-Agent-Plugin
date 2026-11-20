@@ -162,6 +162,7 @@ def main() -> int:
                 )
             requested = set(server.get("scopes", []))
             requested |= set(server.get("auth", {}).get("scopes", []))
+            requested |= set(server.get("oauth", {}).get("scopes", "").split())
             extra = requested - PUBLISHED_SCOPES
             check(
                 not extra,
